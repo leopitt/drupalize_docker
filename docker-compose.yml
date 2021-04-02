@@ -6,6 +6,7 @@ services:
       # Map the server document root to our /web directory. That will contain
       # Drupal's index.php
       - ./docroot/web:/usr/share/nginx/html
+      - ./docker/web/conf/nginx.conf:/etc/nginx/nginx.conf
     ports:
         - "8080:80"
   # See https://drupalize.me/tutorial/dockerize-existing-project?p=3040
