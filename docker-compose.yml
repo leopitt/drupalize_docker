@@ -1,0 +1,8 @@
+version: '3'
+services:
+  cli:
+    build:
+      context: ./docker/cli
+    volumes:
+      - ./docroot:/var/www/html
+      - ./docker/cli/php.ini:/usr/local/etc/php/php.ini
