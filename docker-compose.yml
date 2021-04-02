@@ -1,8 +1,21 @@
 version: '3'
 services:
+  web:
+    image: nginx:1.19
+    volumes:
+      # Map the server document root to our /web directory. That will contain
+      # Drupal's index.php
+      - ./docroot/web:/usr/share/nginx/html
+    ports:
+        - "8080:80"
+  # See https://drupalize.me/tutorial/dockerize-existing-project?p=3040
   cli:
     build:
       context: ./docker/cli
     volumes:
+      # Map /var/www/html to our /docroot. This will contain our composer.json
+      # and /vendor directories. We need them to be accessible from the PHP
+      # container.
       - ./docroot:/var/www/html
+      # Store php.ini files on our host file system so they're easy to edit.
       - ./docker/cli/php:/usr/local/etc/php
