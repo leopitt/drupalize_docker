@@ -22,3 +22,15 @@ services:
       - ./docroot:/var/www/html
       # Store php.ini files on our host file system so they're easy to edit.
       - ./docker/cli/php:/usr/local/etc/php
+  db:
+    image: mariadb:10.5.9
+    container_name: db
+    volumes:
+      - ./db-backups:/var/mysql/backups:delegated
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: default
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
