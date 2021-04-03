@@ -15,6 +15,8 @@ web/sites/*
 !web/sites/default
 !web/sites/*.php
 !web/sites/*.yml
+# Ingore local settings
+web/sites/default/settings.local.php
 # Ignore sites.php
 web/sites/sites.php
 # Ignore development yml
