@@ -1,1 +1,2 @@
 db-backups/*.sql
+docker/db/mysql
