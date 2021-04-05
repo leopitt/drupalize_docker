@@ -26,6 +26,7 @@ services:
     image: mariadb:10.5.9
     container_name: db
     volumes:
+      - ./docker/db/mysql:/var/lib/mysql
       - ./db-backups:/var/mysql/backups:delegated
     environment:
       MYSQL_ROOT_PASSWORD: root
