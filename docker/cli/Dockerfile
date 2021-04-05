@@ -50,6 +50,3 @@ RUN set -eux; \
 
 # Install composer.
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/
-
-# By default we have a docroot path of /var/www/html. We want the docroot to be
-# /var/www/html/web, and /var/www/html to be mapped to our local /docroot.

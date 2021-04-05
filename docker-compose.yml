@@ -10,6 +10,8 @@ services:
       - ./docker/web/conf/site.conf:/etc/nginx/conf.d/site.conf
     ports:
         - "8080:80"
+    depends_on:
+      - cli
   # See https://drupalize.me/tutorial/dockerize-existing-project?p=3040
   cli:
     build:
@@ -22,16 +24,24 @@ services:
       - ./docroot:/var/www/html
       # Store php.ini files on our host file system so they're easy to edit.
       - ./docker/cli/php:/usr/local/etc/php
+      # Map the image default entrypoint to a local file. See
+      # https://serverfault.com/a/1002219
+      - ./docker/cli/docker-entrypoint.sh:/usr/local/bin/docker-php-entrypoint
+      # Make template settings available to the container.
+      - ./docker/cli/init:/usr/local/init
+    depends_on:
+      - db
+    env_file:
+      ./environment.env
   db:
     image: mariadb:10.5.9
     container_name: db
     volumes:
       - ./docker/db/mysql:/var/lib/mysql
       - ./db-backups:/var/mysql/backups:delegated
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: default
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
+      # Map seed database directory.
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+    env_file:
+      ./environment.env
     ports:
       - "3306:3306"
